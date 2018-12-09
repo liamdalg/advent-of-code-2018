@@ -14,4 +14,13 @@ for c in claims:
 
 print(sum(claimed.values()))
 
-#part two
+#part two (ok this is very inefficient)
+for c in claims:
+    intact = True
+    for x in range(c[0][0], c[0][1]):
+        for y in range(c[1][0], c[1][1]):
+            if claimed[(x,y)] == 1:
+                intact = False
+    if intact: 
+        print(c)
+        break
