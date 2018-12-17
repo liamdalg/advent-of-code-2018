@@ -35,7 +35,7 @@ def sum_value(cur: Node) -> int:
         return sum(cur.metadata)
     s = 0
     for m in cur.metadata:
-        if m != 0 and m <= len(cur.children):
+        if m in range(1, cur.c_count + 1):
             s += sum_value(cur.children[m - 1])
     return s
 
