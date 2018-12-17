@@ -30,6 +30,17 @@ def sum_meta(root: Node) -> int:
         s += sum_meta(c)
     return s
 
+def sum_value(cur: Node) -> int:
+    if cur.c_count == 0:
+        return sum(cur.metadata)
+    s = 0
+    for m in cur.metadata:
+        if m != 0 and m <= len(cur.children):
+            s += sum_value(cur.children[m - 1])
+    return s
+
 data, root = parse(data)
 total = sum_meta(root)
+value = sum_value(root)
 print(total)
+print(value)
