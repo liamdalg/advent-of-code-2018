@@ -45,17 +45,26 @@ tick = 0
 crashed = False
 while not crashed:
     tick += 1
-    carts.sort(key=lambda x: (x.x, x.y))
-    print(carts)
-    for cart in carts:
+    carts.sort(key=lambda x: (x.y, x.x))
+    i = 0
+    while i < len(carts):
+        cart = carts[i]
         cart.move()
+        print(cart)
         if grid[cart.y][cart.x] == '+':
             cart.turn()
         elif (grid[cart.y][cart.x] == '/' and cart.dir[0] != 0) or (grid[cart.y][cart.x] == '\\' and cart.dir[1] != 0):
             cart.turnLeft()
         elif (grid[cart.y][cart.x] == '\\' and cart.dir[0] != 0) or (grid[cart.y][cart.x] == '/' and cart.dir[1] != 0):
             cart.turnRight()
-        if len([ c for c in carts if cart.x == c.x and cart.y == c.y ]) > 1:
-            crashed = True
+        others = [ c for c in carts if cart.x == c.x and cart.y == c.y ]
+        if len(others) > 1:
             print('Crashed at ({}, {})!'.format(cart.x, cart.y))
+            carts.remove(others[0])
+            carts.remove(others[1])
+            i -= 1
+        if (len(carts) == 1):
+            print('Last cart at ({}, {})!'.format(carts[0].x, carts[0].y))
+            crashed = True
             break
+        i += 1
